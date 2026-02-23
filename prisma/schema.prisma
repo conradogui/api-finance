@@ -7,6 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
 model User {
   id           Int           @id @default(autoincrement())
   name         String
@@ -23,16 +28,21 @@ model Category {
   userId       Int
   user         User          @relation(fields: [userId], references: [id])
   transactions Transaction[]
+
+  @@unique([userId, name])
 }
 
 model Transaction {
   id         Int       @id @default(autoincrement())
   title      String
-  amount     Float
-  type       String
+  amount     Decimal   @db.Decimal(10, 2)
+  type       TransactionType
   date       DateTime
   userId     Int
   categoryId Int?
   category   Category? @relation(fields: [categoryId], references: [id])
   user       User      @relation(fields: [userId], references: [id])
+
+  @@index([userId, date])
+  @@index([userId, categoryId, date])
 }
