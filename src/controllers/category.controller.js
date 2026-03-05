@@ -1,9 +1,8 @@
 const service = require('../services/category.services')
 const { createCategorySchema, renameCategorySchema, categoryIdParamSchema} = require('../schema/category.schema')
 
-const data = createCategorySchema.parse(req.body)
-
-class CategoryController {
+class CategoryController { 
+    //Lista todas as categorias
     async index(req, res) {
         try {
             const userId = req.user.id
@@ -17,7 +16,7 @@ class CategoryController {
         try {
             const userId = req.user.id
             const data = createCategorySchema.parse(req.body)
-            const created = await service.create(userId, data, name)
+            const created = await service.create(userId, data.name)
             res.status(201).json(created)
         } catch (err) {
             const isZod = err && err.name === 'ZodError'
