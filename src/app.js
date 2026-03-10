@@ -20,11 +20,15 @@ const authRoutes = require('./routes/auth.routes')
 
 const categoriesRoutes = require('./routes/category.routes')
 
+const transactionRoutes = require('./routes/transactions.routes')
+
 
 app.use('/users', userRoutes)
 
 app.use('/auth', authRoutes)
 
 app.use('/categories', categoriesRoutes)
+
+app.use('/transactions', transactionRoutes)
 
 module.exports = app

@@ -20,7 +20,7 @@ class CategoryController {
             res.status(201).json(created)
         } catch (err) {
             const isZod = err && err.name === 'ZodError'
-            res.status(isZod ? 422 : 400).json({error: err.message || 'Erro ao criar'})
+            res.status(isZod ? 422 : 400).json({error: err.message || 'Erro ao criar categoria'})
         }
     }
     async update(req, res) {
@@ -32,7 +32,7 @@ class CategoryController {
             res.json(updated)
         } catch (err) {
             const isZod = err && err.name === 'ZodError'
-            const code = isZod ? 422 : (err.message?.includes('não encontrada') ? 404 : 400)
+            const code = isZod ? 422 : (err.message?.includes('Categoria não encontrada') ? 404 : 400)
             res.status(code).json({ error: err.message || 'Erro ao atualizar' })
         }
     }
@@ -45,7 +45,7 @@ class CategoryController {
             res.status(204).send()
         } catch (err) {
             const isZod = err && err.name === 'ZodError'
-            const code = isZod ? 422 : (err.message?.includes('não encontrada') ? 404 : 400)
+            const code = isZod ? 422 : (err.message?.includes('Categoriaão encontrada') ? 404 : 400)
             res.status(code).json({ error: err.message || 'Erro ao excluir' })
         }
     }
